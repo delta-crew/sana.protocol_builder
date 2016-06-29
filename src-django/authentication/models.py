@@ -9,7 +9,3 @@ class UserProfile(models.Model):
     class Meta:
         app_label = 'authentication'
 
-
-class MDSLink(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    mds_link = models.URLField()

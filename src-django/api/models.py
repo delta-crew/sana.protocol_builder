@@ -12,6 +12,22 @@ class Procedure(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    # rest_hooks requires a `user` prop
+    user = property(lambda self: self.owner)
+
+    def serialize_hook(self, hook):
+        # TODO fix gross hax
+
+        return {
+            'hook': hook.dict(),
+            'data': {
+                'title': self.title,
+                'author': self.author,
+                'uuid': self.uuid,
+                'remote_src': 'http://sana-pb.dev:8000/api/procedures/{0}/generate'.format(self.id),
+            }
+        }
+
     class Meta():
         app_label = 'api'
 

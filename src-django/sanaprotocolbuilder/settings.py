@@ -272,6 +272,6 @@ TEMPLATES = [
 
 HOOK_EVENTS = {
     'procedure.added': 'api.Procedure.created', # Web hook on Procedure Object? if we find it
-    'procedure.changed': 'api.Procedure.updated+',
+    'procedure.changed': 'api.Procedure.updated',
     'procedure.removed': 'api.Procedure.deleted',
 }

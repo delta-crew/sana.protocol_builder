@@ -9,6 +9,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.cache import cache
 from generator import ProtocolBuilder
 from mailer import templater, tasks
+from rest_hooks.models import Hook
 import models
 import json
 import os
@@ -60,6 +61,40 @@ class UserViewSet(viewsets.ModelViewSet):
             data={
                 'errors': [msg],
             })
+
+    @list_route(methods=['patch'])
+    def update_mds(self, request):
+        if not request.body:
+            return self.error_response(
+                status.HTTP_400_BAD_REQUEST,
+                'There was nothing submitted')
+
+        body = json.loads(request.body)
+        user = User.objects.get(auth_token=body['auth'])
+
+        # TODO can we not just listen to procedure.*?
+        # May not be an option cause you are supposed to be able to unsubscribe
+        # to each event individually...
+        if 'mds_link' in body and body['mds_link']:
+            Hook.objects.filter(user=user).delete()
+
+            for event in ['procedure.added','procedure.changed','procedure.removed']:
+                    hook = Hook(
+                            user=user,
+                            event=event,
+                            target=body['mds_link'])
+                    hook.save()
+
+        user_details = {
+            'id': user.pk,
+            'is_superuser': user.is_superuser,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'username': user.username,
+            'email': user.email,
+        }
+
+        return JsonResponse({'user': user_details})
 
     @list_route(methods=['patch'])
     def update_details(self, request):
