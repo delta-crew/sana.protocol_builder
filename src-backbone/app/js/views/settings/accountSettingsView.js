@@ -2,7 +2,7 @@ let App = require('utils/sanaAppInstance');
 
 
 module.exports = Marionette.ItemView.extend({
-    template: require('templates/auth/settingsView'),
+  template: require('templates/settings/accountSettingsView'),
 
     ui: {
         form: 'form'

@@ -56,6 +56,40 @@ module.exports = Backbone.Model.extend({
         });
     },
 
+    updateMds: function(formData) {
+        let self = this;
+        let json = {};
+        formData.forEach(function(item) {
+            if (item.value !== "") {
+                json[item.name] = item.value;
+            }
+        });
+
+        App().session.setAuthToken(json);
+        $.ajax({
+            type: 'PATCH',
+            data: JSON.stringify(json),
+            url: '/api/users/update_mds',
+            beforeSend: function() {
+                App().RootView.showSpinner();
+            },
+            complete: function() {
+                App().RootView.hideSpinner();
+            },
+            success: function(response) {
+                self.set(response.user);
+                Helpers.navigateToDefaultLoggedIn();
+                App().RootView.clearNotifications();
+                App().RootView.showNotification({
+                    title: 'Success!',
+                    desc: 'Successfuly updated account mds!',
+                    alertType: 'success',
+                });
+            },
+            error: self._errorHandler,
+        });
+    },
+
     _errorHandler: function(errors) {
         App().RootView.clearNotifications();
         let parsedErrors = JSON.parse(errors.responseText);
