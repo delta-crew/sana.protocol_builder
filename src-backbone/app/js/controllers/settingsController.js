@@ -15,7 +15,7 @@ module.exports = Marionette.Controller.extend({
         Helpers.arrivedOnView('Account Settings');
 
         let settingsLayoutView = new SettingsLayoutView();
-        App().RootView.switchMainView(SettingsLayoutView);
+        App().RootView.switchMainView(settingsLayoutView);
         settingsLayoutView.showChildView('settingsFormArea', new AccountSettingsView());
     },
 
@@ -23,7 +23,7 @@ module.exports = Marionette.Controller.extend({
         Helpers.arrivedOnView('Mds Settings');
 
         let settingsLayoutView = new SettingsLayoutView();
-        App().RootView.switchMainView(SettingsLayoutView);
+        App().RootView.switchMainView(settingsLayoutView);
         settingsLayoutView.showChildView('settingsFormArea', new MdsSettingsView());
     },
 

@@ -10,7 +10,7 @@ let gulp = require('gulp');
 let del = require('del');
 
 let Config = {
-    DEBUG: false,
+    DEBUG: process.env.DEBUG || false,
     output: 'dist/',
     entryFile: 'app/js/main.js',
     configFileDir: 'app/js/utils/',
