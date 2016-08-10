@@ -150,6 +150,13 @@ let Procedure = Backbone.Model.extend({
         });
     },
 
+    fork: function() {
+        return $.ajax({
+            type: 'POST',
+            url: this.url() + '/fork',
+        });
+    }
+
 });
 
 Procedure.ACTIVE_PAGE_CHANGE_EVENT = ACTIVE_PAGE_CHANGE_EVENT;
