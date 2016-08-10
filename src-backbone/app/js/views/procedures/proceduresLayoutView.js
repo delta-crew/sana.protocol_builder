@@ -10,6 +10,7 @@ let ProceduresCollectionView = require('views/procedures/proceduresCollectionVie
 
 
 module.exports = Marionette.LayoutView.extend({
+    collectionView: ProceduresCollectionView,
 
     template: require('templates/procedures/proceduresLayoutView'),
 
@@ -52,7 +53,7 @@ module.exports = Marionette.LayoutView.extend({
         App().RootView.switchNavbar(navbarView);
 
         // Procedures collection
-        this._proceduresCollectionView = new ProceduresCollectionView({
+        this._proceduresCollectionView = new this.collectionView({
             collection: this.procedures,
         });
         this.showChildView('proceduresList', this._proceduresCollectionView);
