@@ -213,14 +213,7 @@ gulp.task('locales', function() {
 
 gulp.task('build', ['css', 'js', 'img', 'fonts', 'html', 'locales']);
 
-gulp.task('default', ['build'], function() {
-    gulp.watch(Config.stylesheets, ['css']);
-    gulp.watch(Config.javascripts, ['js']);
-    gulp.watch(Config.images, ['img']);
-    gulp.watch(Config.fonts, ['fonts']);
-    gulp.watch(Config.html, ['html']);
-    gulp.watch(Config.locales, ['locales']);
-
+gulp.task('default', function() {
     gulp.start('webserver');
 });
 
