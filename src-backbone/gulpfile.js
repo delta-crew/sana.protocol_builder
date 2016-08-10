@@ -50,6 +50,7 @@ gulp.task('webserver', function() {
     connect.server({
         port: process.env.PORT || 8080,
         host: process.env.HOST,
+        livereload: Config.DEBUG,
         root: [ Config.output ],
         fallback: Config.output + '/index.html'
     });
@@ -92,8 +93,10 @@ gulp.task('js-config', function () {
     let rename = require('gulp-rename');
 
     let data = {
-        API_BASE: (Config.DEBUG ? 'http://localhost:8000'
-                                : 'https://sanaprotocolbuilder.me'),
+        API_BASE: (process.env.API_BASE ||
+			(Config.DEBUG ?
+				'http://localhost:8000' :
+				'https://sanaprotocolbuilder.me')),
         DEBUG: Config.DEBUG,
     };
 
