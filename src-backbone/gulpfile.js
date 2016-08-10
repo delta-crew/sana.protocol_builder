@@ -48,7 +48,8 @@ let connect = require('gulp-connect');
 
 gulp.task('webserver', function() {
     connect.server({
-        livereload: true,
+        port: process.env.PORT || 8080,
+        host: process.env.HOST,
         root: [ Config.output ],
         fallback: Config.output + '/index.html'
     });
