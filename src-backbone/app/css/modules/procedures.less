@@ -199,14 +199,20 @@ section#procedures-list{
             position: relative;
 
             .title{
-                display: block;
+                display: inline-block;
                 font-size: 18px;
                 font-weight: bold;
                 margin-bottom: 10px;
                 line-height: 24px;
             }
 
-            span{
+            .procedure-label {
+                display: inline-block;
+                vertical-align: text-top;
+                margin-left: 5px;
+            }
+
+            .procedure-info{
                 display: block;
                 margin: 5px 0;
 
