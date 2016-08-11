@@ -1,5 +1,5 @@
 let Procedures = require('collections/procedures');
 
 module.exports = Procedures.extend({
-    url: '/api/procedures/public',
+    url: '/api/procedures?public=true',
 });
