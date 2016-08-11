@@ -1,31 +1,41 @@
-<h4>Update Account Information</h4>
-<form>
-	<div class="form-group">
-		<label for="current-password" class="sr-only">{{ i18n "Current Password" }}</label>
-		<input type="password" class="form-control" id="current-password" name="current-password" placeholder="Current Password (required)">
-	</div>
-
-	<div class="form-group">
-		<label for="first_name" class="sr-only">{{ i18n "First Name" }}</label>
-		<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{ first_name }}">
-	</div>
-
-	<div class="form-group">
-		<label for="last_name" class="sr-only">{{ i18n "Last Name" }}</label>
-		<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{ last_name }}">
-	</div>
-
-	<div class="form-group">
-		<label for="email" class="sr-only">{{ i18n "New Email" }}</label>
-		<input type="text" class="form-control" id="email" name="email" placeholder="New email" value="{{ email }}">
-	</div>
-
-	<div class="form-group">
-		<label for="password" class="sr-only">{{ i18n "New Password" }}</label>
-		<input type="password" class="form-control"  id="password" name="password" placeholder="New Password">
-	</div>
-
-	<div>
-      <button type="submit" class="btn btn-primary btn-block" id="submit-btn">{{ i18n "Update Information" }}</button>
+<div class="settings-child-view">
+  <div class="list-group settings-navbar">
+    <h4 class="heading"> {{i18n "User Settings" }}</h4>
+    <a href="/{{ currentLanguage }}/settings/account" class="list-group-item active">{{ i18n "Account" }}</a>
+    <a href="/{{ currentLanguage }}/settings/mds" class="list-group-item list-group-item-action">{{ i18n "MDS Links" }}</a>
   </div>
-</form>
+
+  <div class="update-form">
+    <h4>Update Account Information</h4>
+    <form>
+      <div class="form-group">
+        <label for="current-password" class="sr-only">{{ i18n "Current Password" }}</label>
+        <input type="password" class="form-control" id="current-password" name="current-password" placeholder="Current Password (required)">
+      </div>
+
+      <div class="form-group">
+        <label for="first_name" class="sr-only">{{ i18n "First Name" }}</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{ first_name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="last_name" class="sr-only">{{ i18n "Last Name" }}</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{ last_name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="sr-only">{{ i18n "New Email" }}</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="New email" value="{{ email }}">
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="sr-only">{{ i18n "New Password" }}</label>
+        <input type="password" class="form-control"  id="password" name="password" placeholder="New Password">
+      </div>
+
+      <div>
+          <button type="submit" class="btn btn-primary btn-block" id="submit-btn">{{ i18n "Update Information" }}</button>
+      </div>
+    </form>
+  </div>
+</div>

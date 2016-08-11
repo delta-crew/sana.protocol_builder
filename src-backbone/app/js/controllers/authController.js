@@ -3,9 +3,6 @@ const Helpers                   = require('utils/helpers');
 const AuthLayoutView            = require('views/auth/authLayoutView');
 const SignupView                = require('views/auth/signupView');
 const LoginView                 = require('views/auth/loginView');
-const SettingsLayoutView        = require('views/settings/settingsLayoutView');
-const AccountSettingsView       = require('views/settings/accountSettingsView');
-const MdsSettingsView           = require('views/settings/mdsSettingsView');
 const ResetPasswordView         = require('views/auth/resetPasswordView');
 const ResetPasswordCompleteView = require('views/auth/resetPasswordCompleteView');
 const ConfirmEmailView          = require('views/auth/confirmEmailView');
@@ -15,26 +12,6 @@ module.exports = Marionette.Controller.extend({
 
     routeIndex: function() {
         Helpers.navigateToDefaultLoggedOut();
-    },
-
-    routeAccountSettings: function() {
-        Helpers.arrivedOnView('Account Settings');
-
-        let authLayoutView = new AuthLayoutView();
-        //let settingsLayoutView = new SettingsLayoutView();
-        App().RootView.switchMainView(authLayoutView);
-        authLayoutView.showChildView('authFormArea', new AccountSettingsView());//settingsLayoutView);
-        //settingsLayoutView.showChildView('settingsFormArea', new AccountSettingsView());
-    },
-
-    routeMdsSettings: function() {
-        Helpers.arrivedOnView('Account Settings');
-
-        let authLayoutView = new AuthLayoutView();
-        //let settingsLayoutView = new SettingsLayoutView();
-        App().RootView.switchMainView(authLayoutView);
-        authLayoutView.showChildView('authFormArea', new MdsSettingsView());//settingsLayoutView);
-        //settingsLayoutView.showChildView('settingsFormArea', new MdsSettingsView());
     },
 
     routeResetPassword: function() {
