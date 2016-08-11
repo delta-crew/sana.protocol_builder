@@ -60,6 +60,16 @@ class ProcedureViewSet(viewsets.ModelViewSet):
         copy.is_public = False
         copy.save()
 
+        for page in copy.pages.all():
+            page.pk = None
+            page.procedure = copy.pk
+            page.save()
+
+            for element in page.elements.all():
+                element.pk = None
+                element.page = page.pk
+                element.save()
+
         serializer = self.get_serializer_class()
         serialized = serializer(copy)
         data = serialized.data
