@@ -1,10 +1,11 @@
 const Config = require('utils/config');
 
-let App              = require('utils/sanaAppInstance');
-let Helpers          = require('utils/helpers');
-let Procedure        = require('models/procedure');
-let ProceduresLayout = require('views/procedures/proceduresLayoutView');
-let BuilderLayout    = require('views/builder/builderLayoutView');
+let App                    = require('utils/sanaAppInstance');
+let Helpers                = require('utils/helpers');
+let Procedure              = require('models/procedure');
+let ProceduresLayout       = require('views/procedures/proceduresLayoutView');
+let PublicProceduresLayout = require('views/procedures/publicProceduresLayoutView');
+let BuilderLayout          = require('views/builder/builderLayoutView');
 
 
 module.exports = Marionette.Controller.extend({
@@ -13,6 +14,12 @@ module.exports = Marionette.Controller.extend({
         Helpers.arrivedOnView('Procedures');
         App().RootView.clearNotifications(); // Clear login errors
         App().RootView.switchMainView(new ProceduresLayout(), 'procedures');
+    },
+
+    routePublicProcedures: function() {
+        Helpers.arrivedOnView('Procedures');
+        App().RootView.clearNotifications(); // Clear login errors
+        App().RootView.switchMainView(new PublicProceduresLayout(), 'procedures');
     },
 
     routeBuilder: function(procedureId, pageId) {

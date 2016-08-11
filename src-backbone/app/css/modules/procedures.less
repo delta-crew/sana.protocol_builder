@@ -73,8 +73,7 @@ header#procedures-menu{
 header#procedures-list-heading{
     overflow: hidden;
 
-    h2,
-    a#new-procedure-btn{
+    h2 {
         margin: 30px 0;
     }
 
@@ -83,13 +82,14 @@ header#procedures-list-heading{
         float: left;
     }
 
-    a#new-procedure-btn{
+    a#new-procedure-btn, a#public-procedure-btn, a#my-procedure-btn{
         float: right;
         font-weight: bold;
         display: block;
         height: 40px;
         line-height: 40px;
         padding: 0 20px;
+        margin: 30px 5px;
     }
 
     @media (max-width: 767px) {
@@ -198,7 +198,7 @@ section#procedures-list{
             padding-right: (@icon-size * 2) + (@tile-padding * 2) + @icon-margin;
             position: relative;
 
-            a.title{
+            .title{
                 display: block;
                 font-size: 18px;
                 font-weight: bold;
@@ -239,6 +239,10 @@ section#procedures-list{
                 }
 
                 &.delete{
+                    right: @tile-padding;
+                }
+
+                &.save{
                     right: @tile-padding;
                 }
 
