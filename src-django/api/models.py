@@ -15,7 +15,6 @@ class Procedure(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     originator = models.ForeignKey(User,
             on_delete=models.SET_NULL,
-            blank=True,
             null=True,
             editable=False,
             related_name='%(class)s_shared_procedures')

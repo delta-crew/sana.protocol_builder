@@ -22,8 +22,9 @@ class ProcedureViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if self.request.GET.get('public') == 'true':
-            return models.Procedure.objects.filter(public=True)
+        request_flag = 'public'
+        if self.request.GET.get(request_flag) == 'true':
+            return models.Procedure.objects.filter(is_public=True)
         return models.Procedure.objects.filter(owner=user)
 
     def get_serializer_class(self):
