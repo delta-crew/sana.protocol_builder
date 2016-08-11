@@ -18,6 +18,7 @@ let Procedure = Backbone.Model.extend({
         return {
             'title': i18n.t('Untitled Procedure'),
             'author': user.get('first_name') + ' ' + user.get('last_name'),
+            'is_public': false,
         };
     },
 
@@ -148,6 +149,13 @@ let Procedure = Backbone.Model.extend({
             },
         });
     },
+
+    fork: function() {
+        return $.ajax({
+            type: 'POST',
+            url: this.url() + '/fork',
+        });
+    }
 
 });
 
