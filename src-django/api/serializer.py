@@ -75,7 +75,15 @@ class ProcedureCreatedBySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
+        fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'date_joined',
+        )
         read_only_fields = (
+            'id',
             'username',
             'first_name',
             'last_name',

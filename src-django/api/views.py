@@ -50,24 +50,28 @@ class ProcedureViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['POST'])
     def fork(self, request, pk=None):
-        copy = models.Procedure.objects.get(pk=pk)
+        original = models.Procedure.objects.get(pk=pk)
 
-        copy.fork_of_id = copy.pk
-        copy.pk = None
-        if copy.originator == None:
-            copy.originator = copy.owner
+        copy = models.Procedure()
         copy.owner = request.user
-        copy.is_public = False
+        copy.fork_of_id = original.pk
+        copy.title = original.title
+        copy.author = original.author
+        if original.originator == None:
+            copy.originator = original.owner
+        else:
+            copy.originator = original.originator
         copy.save()
 
-        for page in copy.pages.all():
+        for page in original.pages.all():
+            elements = page.elements.all()
             page.pk = None
-            page.procedure = copy.pk
+            page.procedure = copy
             page.save()
 
-            for element in page.elements.all():
+            for element in elements:
                 element.pk = None
-                element.page = page.pk
+                element.page = page
                 element.save()
 
         serializer = self.get_serializer_class()
