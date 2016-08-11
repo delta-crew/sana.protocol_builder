@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.conf import settings
+from urlparse import urljoin
 import uuid
 
 
@@ -11,6 +13,19 @@ class Procedure(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     last_modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    originator = models.ForeignKey(User,
+            on_delete=models.SET_NULL,
+            blank=True,
+            null=True,
+            editable=False,
+            related_name='%(class)s_shared_procedures')
+    is_public = models.BooleanField(default=False)
+    fork_of = models.ForeignKey('self',
+            on_delete=models.SET_NULL,
+            blank=True,
+            null=True,
+            editable=False,
+            related_name="%(class)s_forks")
 
     # rest_hooks requires a `user` prop
     user = property(lambda self: self.owner)
@@ -24,7 +39,7 @@ class Procedure(models.Model):
                 'title': self.title,
                 'author': self.author,
                 'uuid': self.uuid,
-                'remote_src': 'http://sana-pb.dev:8000/api/procedures/{0}/generate'.format(self.id),
+                'remote_src': urljoin(settings.API_URL, 'api/procedures/{0}/generate'.format(self.id)),
             }
         }
 

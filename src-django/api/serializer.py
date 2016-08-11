@@ -71,6 +71,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
 
+class ProcedureCreatedBySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'date_joined',
+        )
 
 class PageListSerializer(serializers.ListSerializer):
 
@@ -125,6 +135,7 @@ class PageSerializer(serializers.ModelSerializer):
 
 class ProcedureSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.id')
+    originator = ProcedureCreatedBySerializer()
 
     class Meta:
         model = models.Procedure
@@ -135,7 +146,10 @@ class ProcedureSerializer(serializers.ModelSerializer):
             'uuid',
             'owner',
             'last_modified',
-            'created'
+            'created',
+            'is_public',
+            'fork_of',
+            'originator',
         )
 
 

@@ -22,6 +22,8 @@ class ProcedureViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if self.request.GET.get('public') == 'true':
+            return models.Procedure.objects.filter(public=True)
         return models.Procedure.objects.filter(owner=user)
 
     def get_serializer_class(self):
@@ -44,6 +46,24 @@ class ProcedureViewSet(viewsets.ModelViewSet):
         response['Content-Disposition'] = 'attachment; filename="procedure.xml"'
 
         return response
+
+    @detail_route(methods=['POST'])
+    def fork(self, request, pk=None):
+        copy = models.Procedure.objects.get(pk=pk)
+
+        copy.fork_of_id = copy.pk
+        copy.pk = None
+        if copy.originator == None:
+            copy.originator = copy.owner
+        copy.owner = request.user
+        copy.is_public = False
+        copy.save()
+
+        serializer = self.get_serializer_class()
+        serialized = serializer(copy)
+        data = serialized.data
+
+        return Response(data)
 
 
 class UserViewSet(viewsets.ModelViewSet):

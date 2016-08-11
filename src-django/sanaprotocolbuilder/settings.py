@@ -25,7 +25,10 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# API_URL
+API_URL = 'http://api.beta.sanaprotocolbuilder.me:8000/'
+
+ALLOWED_HOSTS = ['api.beta.sanaprotocolbuilder.me']
 
 INTERNAL_IPS = (
     '0.0.0.0',
