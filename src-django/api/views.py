@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 from django.contrib.auth.models import User
 from django.db.utils import DatabaseError
+from django.db.models import Q
 from postgres_copy import CopyMapping
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.cache import cache
@@ -50,10 +51,13 @@ class ProcedureViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['POST'])
     def fork(self, request, pk=None):
-        original = models.Procedure.objects.get(pk=pk)
+        user = self.request.user
+        original = models.Procedure.objects \
+            .filter(Q(public=True) | Q(owner=user)) \
+            .get(pk=pk)
 
         copy = models.Procedure()
-        copy.owner = request.user
+        copy.owner = user
         copy.fork_of_id = original.pk
         copy.title = original.title
         copy.author = original.author
