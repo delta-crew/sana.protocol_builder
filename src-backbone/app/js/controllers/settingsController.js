@@ -1,4 +1,3 @@
-/*
 const App                       = require('utils/sanaAppInstance');
 const Helpers                   = require('utils/helpers');
 const SettingsLayoutView        = require('views/settings/settingsLayoutView');
@@ -16,17 +15,16 @@ module.exports = Marionette.Controller.extend({
         Helpers.arrivedOnView('Account Settings');
 
         let settingsLayoutView = new SettingsLayoutView();
-        App().RootView.switchMainView(SettingsLayoutView);
+        App().RootView.switchMainView(settingsLayoutView);
         settingsLayoutView.showChildView('settingsFormArea', new AccountSettingsView());
     },
 
     routeMdsSettings: function() {
-        Helpers.arrivedOnView('Account Settings');
+        Helpers.arrivedOnView('Mds Settings');
 
         let settingsLayoutView = new SettingsLayoutView();
-        App().RootView.switchMainView(SettingsLayoutView);
+        App().RootView.switchMainView(settingsLayoutView);
         settingsLayoutView.showChildView('settingsFormArea', new MdsSettingsView());
     },
 
 });
-*/

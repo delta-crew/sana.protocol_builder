@@ -1,11 +1,21 @@
-<h4>Update MDS Information</h4>
-<form>
-  <div class="form-group">
-      <label for="mds_link" class="sr-only">{{ i18n "MDS Link" }}</label>
-      <input type="text" class="form-control" id="mds_link" name="mds_link" placeholder="MDS">
+<div class="settings-child-view">
+  <div class="list-group settings-navbar">
+    <h4 class="heading"> {{i18n "User Settings" }}</h4>
+    <a href="/{{ currentLanguage }}/settings/account" class="list-group-item list-group-item-action">{{ i18n "Account" }}</a>
+    <a href="/{{ currentLanguage }}/settings/mds" class="list-group-item active">{{ i18n "MDS Links" }}</a>
   </div>
 
-  <div>
-      <button type="submit" class="btn btn-primary btn-block" id="submit-btn">{{ i18n "Add MDS Link" }}</button>
+  <div class="update-form">
+    <h4>Update MDS Information</h4>
+    <form>
+      <div class="form-group">
+          <label for="mds_link" class="sr-only">{{ i18n "MDS Link" }}</label>
+          <input type="text" class="form-control" id="mds_link" name="mds_link" placeholder="MDS">
+      </div>
+
+      <div>
+          <button type="submit" class="btn btn-primary btn-block" id="submit-btn">{{ i18n "Save MDS Link" }}</button>
+      </div>
+    </form>
   </div>
-</form>
+</div>

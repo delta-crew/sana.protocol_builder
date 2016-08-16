@@ -11,7 +11,8 @@ module.exports = Marionette.ItemView.extend({
         titleField: 'input#change-title',
         authorField: 'input#change-author',
         downloadButton: 'a#download-btn',
-        saveButton: 'a#save-btn'
+        saveButton: 'a#save-btn',
+        publicCheck: 'input#public',
     },
 
     events: {
@@ -19,6 +20,7 @@ module.exports = Marionette.ItemView.extend({
         'keyup @ui.authorField': '_save',
         'click @ui.downloadButton': '_download',
         'click @ui.saveButton':  '_saveProcedure',
+        'click @ui.publicCheck': '_togglePublic',
     },
 
     modelEvents: {
@@ -37,6 +39,10 @@ module.exports = Marionette.ItemView.extend({
                 element.debounceSave();
             });
         });
+    },
+
+    _togglePublic: function() {
+        this.model.attributes.is_public = !this.model.attributes.is_public;
     },
 
     _renderOnce: _.once(function() {

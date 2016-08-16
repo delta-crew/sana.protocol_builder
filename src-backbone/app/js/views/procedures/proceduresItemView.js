@@ -8,6 +8,13 @@ module.exports = Marionette.ItemView.extend({
     tagName: 'li',
     className: 'procedure',
 
+    templateHelpers: function() {
+        return {
+            isShared: this.model.attributes.is_public && App().session.user.id === this.model.attributes.owner,
+            isForked: this.model.attributes.originator,
+        };
+    },
+
     events: {
         'click a.download': '_onDownloadProcedure',
         'click a.delete': '_onDeleteProcedure',
