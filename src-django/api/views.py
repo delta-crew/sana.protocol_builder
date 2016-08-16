@@ -53,7 +53,7 @@ class ProcedureViewSet(viewsets.ModelViewSet):
     def fork(self, request, pk=None):
         user = self.request.user
         original = models.Procedure.objects \
-            .filter(Q(public=True) | Q(owner=user)) \
+            .filter(Q(is_public=True) | Q(owner=user)) \
             .get(pk=pk)
 
         copy = models.Procedure()
