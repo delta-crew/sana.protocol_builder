@@ -56,7 +56,7 @@
     "Ascending Order": "Ascending Order",
     "Descending Order": "Descending Order",
     "Copyright &copy; 2015-YEAR Sana Protocol Builder": "Copyright &copy; 2015-{{ year }} $t(Sana Protocol Builder)",
-    "You currently do not have any procedures.": "You currently do not have any procedures.",
+    "No procedures found.": "No procedures found.",
     "Author": "Author",
     "Last Modified": "Last Modified",
     "Edit this procedure": "Edit this procedure",
