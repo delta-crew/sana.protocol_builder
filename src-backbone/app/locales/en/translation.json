@@ -62,6 +62,11 @@
     "Edit this procedure": "Edit this procedure",
     "Download this procedure as XML": "Download this procedure as XML",
     "Delete this procedure": "Delete this procedure",
+    "No. of forks": "No. of forks",
+    "Save this procedure to your account": "Save this procedure to your account",
+    "Public Procedures": "Public Procedures",
+    "Sort by No. of forks": "Sort by No. of forks",
+
 
     // Builder
     "Untitled Procedure": "Untitled Procedure",
