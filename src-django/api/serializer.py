@@ -76,6 +76,14 @@ class ProcedureCreatedBySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = (
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'date_joined',
+        )
+        read_only_fields = (
+            'id',
             'username',
             'first_name',
             'last_name',
@@ -135,7 +143,7 @@ class PageSerializer(serializers.ModelSerializer):
 
 class ProcedureSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.id')
-    originator = ProcedureCreatedBySerializer()
+    originator = ProcedureCreatedBySerializer(read_only=True)
 
     class Meta:
         model = models.Procedure
@@ -148,6 +156,10 @@ class ProcedureSerializer(serializers.ModelSerializer):
             'last_modified',
             'created',
             'is_public',
+            'fork_of',
+            'originator',
+        )
+        read_only_fields = (
             'fork_of',
             'originator',
         )
