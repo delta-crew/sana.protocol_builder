@@ -18,6 +18,7 @@ module.exports = ProceduresLayoutView.extend({
         'click a#sort-by-title': '_changeSortKey',
         'click a#sort-by-author': '_changeSortKey',
         'click a#sort-by-last-modified': '_changeSortKey',
+        'click a#sort-by-fork-count': '_changeSortKey',
 
         'click a#asc-order': '_changeSortOrder',
         'click a#desc-order': '_changeSortOrder',

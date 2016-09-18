@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 from django.contrib.auth.models import User
 from django.db.utils import DatabaseError
-from django.db.models import Q
+from django.db.models import Q, Count
 from postgres_copy import CopyMapping
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.cache import cache
@@ -18,8 +18,15 @@ import serializer
 import uuid
 
 
+class ProcedureOrderingFilter(filters.OrderingFilter):
+
+    def filter_queryset(self, request, queryset, view):
+        queryset = queryset.annotate(fork_count=Count('procedure_forks'))
+        return super(ProcedureOrderingFilter, self).filter_queryset(request, queryset, view)
+
 class ProcedureViewSet(viewsets.ModelViewSet):
     model = models.Procedure
+    filter_backends = (ProcedureOrderingFilter,)
 
     def get_queryset(self):
         user = self.request.user

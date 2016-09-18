@@ -60,6 +60,10 @@ module.exports = Marionette.LayoutView.extend({
     },
 
     onAttach: function() {
+        this.fetchProcedures();
+    },
+
+    fetchProcedures: function() {
         let self = this;
         this.procedures.fetch({
             beforeSend: function() {
@@ -75,6 +79,9 @@ module.exports = Marionette.LayoutView.extend({
                 console.warn('Failed to fetch Procedures');
                 App().RootView.showNotification('Failed to fetch Procedures!');
             },
+            data: {
+                ordering: self._getOrdering(),
+            }
         });
     },
 
@@ -112,15 +119,19 @@ module.exports = Marionette.LayoutView.extend({
     _changeSortKey: function(event) {
         let key = $(event.toElement).attr('data-sort-key');
         this.procedures.setComparatorKey(key);
-        this.procedures.sort();
+        this.fetchProcedures();
         this._updateToolbarOptions();
     },
 
     _changeSortOrder: function(event) {
         let isAsc = $(event.toElement).attr('data-sort-order') === 'asc';
         this.procedures.setAscOrder(isAsc);
-        this.procedures.sort();
+        this.fetchProcedures();
         this._updateToolbarOptions();
+    },
+
+    _getOrdering: function() {
+        return this.procedures.getOrderSymbol() + this.procedures.getComparatorKey();
     },
 
     _updateToolbarOptions: function() {
