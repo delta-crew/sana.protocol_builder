@@ -29,6 +29,9 @@ class Procedure(models.Model):
     # rest_hooks requires a `user` prop
     user = property(lambda self: self.owner)
 
+    def fork_count(self):
+        return self.procedure_forks.count()
+
     def serialize_hook(self, hook):
         # TODO fix gross hax
 

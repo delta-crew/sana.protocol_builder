@@ -158,10 +158,12 @@ class ProcedureSerializer(serializers.ModelSerializer):
             'is_public',
             'fork_of',
             'originator',
+            'fork_count',
         )
         read_only_fields = (
             'fork_of',
             'originator',
+            'fork_count',
         )
 
 
