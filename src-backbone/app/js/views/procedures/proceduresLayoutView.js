@@ -39,6 +39,9 @@ module.exports = Marionette.LayoutView.extend({
 
         'click a#asc-order': '_changeSortOrder',
         'click a#desc-order': '_changeSortOrder',
+
+        'click a#procedures-previous': '_previousPage',
+        'click a#procedures-next': '_nextPage',
     },
 
     initialize: function() {
@@ -83,6 +86,16 @@ module.exports = Marionette.LayoutView.extend({
                 ordering: self._getOrdering(),
             }
         });
+    },
+
+    _previousPage: function() {
+        this.procedures.previousPage();
+        this.fetchProcedures();
+    },
+
+    _nextPage: function() {
+        this.procedures.nextPage();
+        this.fetchProcedures();
     },
 
     _createNewProcedure: function (event) {

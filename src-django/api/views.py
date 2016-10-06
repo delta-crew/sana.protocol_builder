@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
-from rest_framework import viewsets, status, filters
+from rest_framework import viewsets, status, filters, pagination
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 from django.contrib.auth.models import User
@@ -27,6 +27,7 @@ class ProcedureOrderingFilter(filters.OrderingFilter):
 class ProcedureViewSet(viewsets.ModelViewSet):
     model = models.Procedure
     filter_backends = (ProcedureOrderingFilter,)
+    pagination_class = pagination.LimitOffsetPagination
 
     def get_queryset(self):
         user = self.request.user

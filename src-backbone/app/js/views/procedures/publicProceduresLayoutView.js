@@ -22,5 +22,8 @@ module.exports = ProceduresLayoutView.extend({
 
         'click a#asc-order': '_changeSortOrder',
         'click a#desc-order': '_changeSortOrder',
+
+        'click a#procedures-previous': '_previousPage',
+        'click a#procedures-next': '_nextPage',
     },
 });
