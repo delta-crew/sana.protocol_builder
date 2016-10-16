@@ -1,0 +1,41 @@
+{
+  "run_list": [
+    "recipe[apt]",
+    "recipe[build-essential]",
+    "recipe[openssl]",
+    "recipe[git]",
+    "recipe[ssh_known_hosts]",
+    "recipe[postgres_password]",
+    "recipe[postgresql::client]",
+    "recipe[postgresql::server]",
+    "recipe[redisio]",
+    "recipe[redisio::enable]",
+    "recipe[nginx]",
+    "recipe[python]",
+    "recipe[supervisor]",
+    "recipe[line]",
+    "recipe[nodejs]",
+    "recipe[grunt_cookbook]",
+    "recipe[virtualenvwrapper]",
+    "recipe[sana-protocol-builder]"
+  ],
+  "build_essential": {
+    "compile_time": true
+  },
+  "nginx": {
+    "default_site_enabled": false
+  },
+  "nodejs": {
+    "install_method": "binary",
+    "version": "5.4.1",
+    "binary": {
+      "checksum": "1880f3421da5579678803a523c314b345f5db00799b51b7fd9484a3248efc068"
+    }
+  },
+  "sana_protocol_builder": {
+    "debug": "true",
+    "api_base": "http://52.44.252.106",
+    "ssl": false,
+    "branch": "untested_changes"
+  }
+}

@@ -18,7 +18,9 @@ end
 secrets = Chef::EncryptedDataBagItem.load("secrets", "sana_protocol_builder")
 
 environment = {
-  'PATH' => '/root/.virtualenvs/sana_protocol_builder/bin',
+  'API_BASE' => node['sana_protocol_builder']['api_base'],
+  'DEBUG' => node['sana_protocol_builder']['debug'],
+  'PATH' => "/root/.virtualenvs/sana_protocol_builder/bin:#{ENV['PATH']}",
   'DJANGO_SECRET_KEY' => secrets['django_secret_key'],
   'DJANGO_DB_NAME' => secrets['django_db_name'],
   'DJANGO_DB_USER' => secrets['django_db_user'],
@@ -45,42 +47,22 @@ file '/root/.ssh/id_rsa.pub' do
   action :create_if_missing
 end
 
-file '/etc/ssl/private/sana_protocol_builder.key' do
-  content secrets['ssl_key']
-  owner 'root'
-  group 'root'
-  mode '0600'
-  action :create_if_missing
-end
+if node['sana_protocol_builder']['ssl'] != false
+  file '/etc/ssl/private/sana_protocol_builder.key' do
+    content secrets['ssl_key']
+    owner 'root'
+    group 'root'
+    mode '0600'
+    action :create_if_missing
+  end
 
-file '/etc/ssl/certs/sana_protocol_builder.crt' do
-  content secrets['ssl_crt']
-  owner 'root'
-  group 'root'
-  mode '0644'
-  action :create_if_missing
-end
-
-ssh_known_hosts_entry 'github.com'
-
-git '/opt/sana.protocol_builder' do
-  repository 'git@github.com:SanaMobile/sana.protocol_builder.git'
-  revision 'master'
-  enable_checkout false
-  action :sync
-end
-
-cookbook_file '/etc/nginx/sites-available/sanaprotocolbuilder.me.conf' do
-  source 'sanaprotocolbuilder.me.conf'
-  action :create_if_missing
-end
-
-link '/etc/nginx/sites-enabled/sanaprotocolbuilder.me.conf' do
-  to '/etc/nginx/sites-available/sanaprotocolbuilder.me.conf'
-end
-
-service 'nginx' do
-  action [:enable, :start, :reload]
+  file '/etc/ssl/certs/sana_protocol_builder.crt' do
+    content secrets['ssl_crt']
+    owner 'root'
+    group 'root'
+    mode '0644'
+    action :create_if_missing
+  end
 end
 
 bash 'create sana_protocol_builder virtualenv' do
@@ -92,6 +74,75 @@ bash 'create sana_protocol_builder virtualenv' do
     mkvirtualenv sana_protocol_builder
   EOH
   creates '/root/.virtualenvs/sana_protocol_builder'
+end
+
+bash 'install protocol builder requirements' do
+  user 'root'
+  group 'root'
+  code <<-EOH
+    source /usr/local/bin/virtualenvwrapper.sh
+    workon sana_protocol_builder
+    pip install -r /opt/sana.protocol_builder/src-django/requirements.txt
+    deactivate
+  EOH
+  action :nothing
+end
+
+bash 'run migrations' do
+  user 'root'
+  group 'root'
+  code <<-EOH
+    source /usr/local/bin/virtualenvwrapper.sh
+    workon sana_protocol_builder
+    /opt/sana.protocol_builder/src-django/manage.py migrate
+    deactivate
+  EOH
+  environment(environment)
+  action :nothing
+end
+
+execute "sana npm install" do
+  cwd "/opt/sana.protocol_builder/src-backbone"
+  command "npm install"
+  action :nothing
+end
+
+ssh_known_hosts_entry 'github.com'
+
+git '/opt/sana.protocol_builder' do
+  repository 'git@github.com:delta-crew/sana.protocol_builder.git'
+  revision node['sana_protocol_builder']['branch'] || 'master'
+  checkout_branch node['sana_protocol_builder']['branch'] || 'master'
+  action :sync
+  notifies :run, 'bash[install protocol builder requirements]', :immediate
+  notifies :run, 'bash[run migrations]', :immediate
+  notifies :run, 'execute[sana npm install]', :immediate
+end
+
+execute "build js dist" do
+  cwd "/opt/sana.protocol_builder/src-backbone/node_modules/gulp/bin"
+  command "./gulp.js build"
+  environment(environment)
+end
+
+nginx_conf = if node['sana_protocol_builder']['ssl'] == false
+               "sanaprotocolbuilder-no-ssl.me.conf"
+             else
+               "sanaprotocolbuilder.me.conf"
+             end
+
+cookbook_file '/etc/nginx/sites-available/sanaprotocolbuilder.me.conf' do
+  source nginx_conf
+  action :create_if_missing
+  notifies :restart, "service[nginx]"
+end
+
+link '/etc/nginx/sites-enabled/sanaprotocolbuilder.me.conf' do
+  to '/etc/nginx/sites-available/sanaprotocolbuilder.me.conf'
+end
+
+service 'nginx' do
+  action [:enable, :start, :reload]
 end
 
 template '/root/.virtualenvs/postactivate' do
@@ -130,7 +181,7 @@ postgresql_database_user secrets['django_db_user'] do
   action :create
 end
 
-postgresql_database_user 'sana_protocol_builder' do
+postgresql_database_user 'sana' do
   connection postgres_connection_info
   database_name secrets['django_db_name']
   privileges [:all]
