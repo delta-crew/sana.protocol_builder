@@ -1,9 +1,10 @@
 const Config = require('utils/config');
+const cookieStorage = require('mozilla-doc-cookies');
 
 
 module.exports = function() {
 
-    this.backend = localStorage;
+    this.backend = cookieStorage;
     this.isPersistent = true;
 
     // Check if we have something stored in sessionStorage
@@ -18,17 +19,24 @@ module.exports = function() {
     }
 
     this.read = function (key) {
-        const KEY = Config.APP_NAMESPACE + '_' + key;
+        const KEY = Config.SANA_NAMESPACE + '_' + key;
         return JSON.parse(this.backend.getItem(KEY));
     };
 
     this.write = function(key, obj) {
-        const KEY = Config.APP_NAMESPACE + '_' + key;
-        this.backend.setItem(KEY, JSON.stringify(obj));
+        const KEY = Config.SANA_NAMESPACE + '_' + key;
+        if (this.backend === cookieStorage) {
+            let expTime = null;
+            let path = null;
+            let domain = Config.COOKIE_DOMAIN;
+            this.backend.setItem(KEY, JSON.stringify(obj), expTime, path, domain);
+        } else {
+            this.backend.setItem(KEY, JSON.stringify(obj));
+        }
     };
 
     this.delete = function(key) {
-        const KEY = Config.APP_NAMESPACE + '_' + key;
+        const KEY = Config.SANA_NAMESPACE + '_' + key;
         this.backend.removeItem(KEY);
     };
 

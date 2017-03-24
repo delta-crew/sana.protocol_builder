@@ -94,6 +94,7 @@ gulp.task('js-config', function () {
         API_BASE: (Config.DEBUG ? 'http://localhost:8000'
                                 : 'https://sanaprotocolbuilder.me'),
         DEBUG: Config.DEBUG,
+        COOKIE_DOMAIN: process.env.COOKIE_DOMAIN || 'localhost',
     };
 
     gulp.src(Config.configFileDir + Config.configTemplateFile)
