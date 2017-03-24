@@ -27,7 +27,7 @@ module.exports = function() {
         const KEY = Config.SANA_NAMESPACE + '_' + key;
         if (this.backend === cookieStorage) {
             let expTime = null;
-            let path = null;
+            let path = '/';
             let domain = Config.COOKIE_DOMAIN;
             this.backend.setItem(KEY, JSON.stringify(obj), expTime, path, domain);
         } else {
