@@ -14,6 +14,8 @@ module.exports = {
 
     COOKIE_DOMAIN: '<%= COOKIE_DOMAIN %>',
 
+    HUB_URL: '<%= HUB_URL %>',
+
     LOCALES_SUPPORTED: [
         {
             code: 'en',

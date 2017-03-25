@@ -3,6 +3,7 @@ const Helpers                   = require('utils/helpers');
 const AuthLayoutView            = require('views/auth/authLayoutView');
 const SignupView                = require('views/auth/signupView');
 const LoginView                 = require('views/auth/loginView');
+const LoginHubView              = require('views/auth/loginHubView');
 const SettingsView              = require('views/auth/settingsView');
 const ResetPasswordView         = require('views/auth/resetPasswordView');
 const ResetPasswordCompleteView = require('views/auth/resetPasswordCompleteView');
@@ -55,8 +56,8 @@ module.exports = Marionette.Controller.extend({
         App().RootView.switchMainView(authLayoutView);
         authLayoutView.showChildView('authFormArea', new SignupView());
     },
-  
-    routeLogin: function() {
+
+    routeLoginBuilder: function() {
         if (App().session.isValid()) {
             Helpers.navigateToDefaultLoggedIn();
             return;
@@ -67,6 +68,19 @@ module.exports = Marionette.Controller.extend({
         let authLayoutView = new AuthLayoutView();
         App().RootView.switchMainView(authLayoutView);
         authLayoutView.showChildView('authFormArea', new LoginView());
+    },
+
+    routeLoginHub: function() {
+        if (App().session.isValid()) {
+            Helpers.navigateToDefaultLoggedIn();
+            return;
+        }
+
+        Helpers.arrivedOnView('Login');
+
+        let authLayoutView = new AuthLayoutView();
+        App().RootView.switchMainView(authLayoutView);
+        authLayoutView.showChildView('authFormArea', new LoginHubView());
     },
 
     routeLogout: function() {

@@ -10,7 +10,8 @@ module.exports = Marionette.AppRouter.extend({
 
     appRoutes: {
         ''                     : 'routeIndex',
-        'login'                : 'routeLogin',
+        'login'                : 'routeLoginBuilder',
+        'login/hub'            : 'routeLoginHub',
         'logout'               : 'routeLogout',
         'signup'               : 'routeSignup',
         'account'              : 'routeSettings',
