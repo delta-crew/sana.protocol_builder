@@ -32,9 +32,9 @@ module.exports = Marionette.ItemView.extend({
     _onRememberChanged: function() {
         let remember = this.ui.rememberMeCheckbox.is(':checked');
         if (remember) {
-            App().storage.changeEngine(localStorage, true);
+            App().storage.changeExpiryTime(Infinity);
         } else {
-            App().storage.changeEngine(sessionStorage, false);
+            App().storage.changeExpiryTime(0);
         }
     },
 

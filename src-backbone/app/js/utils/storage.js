@@ -1,10 +1,12 @@
 const Config = require('utils/config');
+const cookieStorage = require('mozilla-doc-cookies');
 
 
 module.exports = function() {
 
-    this.backend = localStorage;
+    this.backend = cookieStorage;
     this.isPersistent = true;
+    this.cookieExpiryTime = Infinity;
 
     // Check if we have something stored in sessionStorage
     // If so, then we were using sessionStorage since last page refresh
@@ -18,18 +20,28 @@ module.exports = function() {
     }
 
     this.read = function (key) {
-        const KEY = Config.APP_NAMESPACE + '_' + key;
+        const KEY = Config.SANA_NAMESPACE + '_' + key;
         return JSON.parse(this.backend.getItem(KEY));
     };
 
     this.write = function(key, obj) {
-        const KEY = Config.APP_NAMESPACE + '_' + key;
-        this.backend.setItem(KEY, JSON.stringify(obj));
+        const KEY = Config.SANA_NAMESPACE + '_' + key;
+        if (this.backend === cookieStorage) {
+            let path = '/';
+            let domain = Config.COOKIE_DOMAIN;
+            this.backend.setItem(KEY, JSON.stringify(obj), this.cookieExpiryTime, path, domain);
+        } else {
+            this.backend.setItem(KEY, JSON.stringify(obj));
+        }
     };
 
     this.delete = function(key) {
-        const KEY = Config.APP_NAMESPACE + '_' + key;
+        const KEY = Config.SANA_NAMESPACE + '_' + key;
         this.backend.removeItem(KEY);
+    };
+
+    this.changeExpiryTime = function(expTime) {
+        this.cookieExpiryTime = expTime;
     };
 
     this.changeEngine = function(newBackend, isPersistent) {

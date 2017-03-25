@@ -8,7 +8,13 @@ module.exports = {
 
     APP_NAMESPACE: 'spb',
 
+    SANA_NAMESPACE: 'sana',
+
     API_BASE: '<%= API_BASE %>',
+
+    COOKIE_DOMAIN: '<%= COOKIE_DOMAIN %>',
+
+    HUB_URL: '<%= HUB_URL %>',
 
     LOCALES_SUPPORTED: [
         {
