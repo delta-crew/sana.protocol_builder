@@ -67,6 +67,9 @@
     "jquery-ui": "=1.10.5",
     "moment": "=2.11.2",
     "mozilla-doc-cookies": "=1.0.3",
-    "underscore": "=1.8.3"
+    "underscore": "=1.8.3",
+    "bluebird": "^3.5.0",
+    "superagent": "^3.5.2",
+    "superagent-bluebird-promise": "^4.2.0"
   }
 }
