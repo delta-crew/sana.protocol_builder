@@ -16,6 +16,8 @@ module.exports = {
 
     HUB_URL: '<%= HUB_URL %>',
 
+    HUB_API_URL: '<%= HUB_API_URL %>',
+
     LOCALES_SUPPORTED: [
         {
             code: 'en',

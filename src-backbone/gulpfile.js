@@ -96,6 +96,7 @@ gulp.task('js-config', function () {
         DEBUG: Config.DEBUG,
         COOKIE_DOMAIN: process.env.COOKIE_DOMAIN || 'localhost',
         HUB_URL: process.env.HUB_URL || 'http://localhost:8001',
+        HUB_API_URL: process.env.HUB_API_URL || 'http://localhost:8001',
     };
 
     gulp.src(Config.configFileDir + Config.configTemplateFile)
