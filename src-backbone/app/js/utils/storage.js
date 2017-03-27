@@ -8,6 +8,7 @@ module.exports = function() {
     this.isPersistent = true;
     this.cookieExpiryTime = Infinity;
     this.path = '/';
+    this.domain = Config.COOKIE_DOMAIN;
 
     // Check if we have something stored in sessionStorage
     // If so, then we were using sessionStorage since last page refresh
@@ -28,8 +29,7 @@ module.exports = function() {
     this.write = function(key, obj) {
         const KEY = Config.SANA_NAMESPACE + '_' + key;
         if (this.backend === cookieStorage) {
-            let domain = Config.COOKIE_DOMAIN;
-            this.backend.setItem(KEY, JSON.stringify(obj), this.cookieExpiryTime, this.path, domain);
+            this.backend.setItem(KEY, JSON.stringify(obj), this.cookieExpiryTime, this.path, this.domain);
         } else {
             this.backend.setItem(KEY, JSON.stringify(obj));
         }
@@ -38,7 +38,7 @@ module.exports = function() {
     this.delete = function(key) {
         const KEY = Config.SANA_NAMESPACE + '_' + key;
         if (this.backend === cookieStorage) {
-            this.backend.removeItem(KEY, this.path);
+            this.backend.removeItem(KEY, this.path, this.domain);
         } else {
             this.backend.removeItem(KEY);
         }
