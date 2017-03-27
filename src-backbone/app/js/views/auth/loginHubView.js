@@ -7,8 +7,8 @@ module.exports = LoginView.extend({
     behaviors: {
         AuthFormBehavior: {
             onAuthenticate: function (formData, serverErrorHandler, networkErrorHandler) {
-                App().session.login(formData, serverErrorHandler, networkErrorHandler);
-                window.location = Config.HUB_URL;
+                App().session.login(
+                    formData, serverErrorHandler, networkErrorHandler, Config.HUB_URL);
             },
         }
     },

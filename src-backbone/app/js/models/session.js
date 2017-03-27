@@ -86,7 +86,7 @@ let SessionModel = Backbone.Model.extend({
         });
     },
 
-    login: function(formData, serverErrorHandler, networkErrorHandler) {
+    login: function(formData, serverErrorHandler, networkErrorHandler, redirectUrl) {
         this.destroy();
 
         let self = this;
@@ -102,6 +102,7 @@ let SessionModel = Backbone.Model.extend({
             },
             success: function(response) {
                 self._authHandler(response, serverErrorHandler);
+                window.location = redirectUrl;
             },
             error: function(error) {
                 networkErrorHandler(error);
