@@ -10,7 +10,7 @@ module.exports = function() {
         protocol.generate(function onSuccess(xmlContent, status, jqXHR) {
             let url = Config.HUB_API_URL + '/protocols';
             let storage = new Storage();
-            let xmlString = xmlContent.xml ? xmlContent.xml : (new XMLSerializer()).serializeToString(xmlContent)
+            let xmlString = xmlContent.xml ? xmlContent.xml : (new XMLSerializer()).serializeToString(xmlContent);
             request.post(url)
                 .set(
                     'Authorization',
@@ -22,7 +22,9 @@ module.exports = function() {
                 })
                 .then(function() {
                     App().RootView.showNotification({
+                        alertType: 'success',
                         title: 'Sucessfully published procedure',
+                        desc: '',
                     });
                 })
                 .catch(function() {
@@ -32,6 +34,9 @@ module.exports = function() {
                 });
         }, function onError(jqXHR, textStatus, errorThrown) {
             console.warn('Failed to generate Procedure', textStatus);
+            App().RootView.showNotification({
+                title: 'Failed to generate XML for procedure. Make sure it is valid.',
+            });
         });
     };
 };
