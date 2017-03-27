@@ -89,6 +89,12 @@ module.exports = Marionette.Controller.extend({
         App().session.logout();
     },
 
+    routeLogoutHub: function() {
+        Helpers.arrivedOnView('Logout');
+
+        App().session.logout('/login/hub');
+    },
+
     routeConfirmEmail: function(token) {
         Helpers.arrivedOnView('Confirm Email');
 

@@ -112,7 +112,7 @@ let SessionModel = Backbone.Model.extend({
         });
     },
 
-    logout: function() {
+    logout: function(redirectUrl) {
         let self = this;
         $.ajax({
             type: 'POST',
@@ -123,6 +123,9 @@ let SessionModel = Backbone.Model.extend({
             complete: function() {
                 App().RootView.hideSpinner();
                 self.destroy();
+                if (redirectUrl) {
+                    window.location = redirectUrl;
+                }
             },
         });
     },

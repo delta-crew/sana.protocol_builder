@@ -13,6 +13,7 @@ module.exports = Marionette.AppRouter.extend({
         'login'                : 'routeLoginBuilder',
         'login/hub'            : 'routeLoginHub',
         'logout'               : 'routeLogout',
+        'logout/hub'           : 'routeLogoutHub',
         'signup'               : 'routeSignup',
         'account'              : 'routeSettings',
         'resetpassword'        : 'routeResetPassword',
