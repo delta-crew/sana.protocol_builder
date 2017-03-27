@@ -91,9 +91,8 @@ gulp.task('js-config', function () {
     let rename = require('gulp-rename');
 
     let data = {
-        API_BASE: (Config.DEBUG ? 'http://localhost:8000'
-                                : 'https://sanaprotocolbuilder.me'),
         DEBUG: Config.DEBUG,
+        API_BASE: process.env.API_BASE || 'http://localhost:8000',
         COOKIE_DOMAIN: process.env.COOKIE_DOMAIN || 'localhost',
         HUB_URL: process.env.HUB_URL || 'http://localhost:3000',
         HUB_API_URL: process.env.HUB_API_URL || 'http://localhost:8001',
