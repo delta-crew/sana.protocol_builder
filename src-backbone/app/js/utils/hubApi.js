@@ -10,6 +10,7 @@ module.exports = function() {
         protocol.generate(function onSuccess(xmlContent, status, jqXHR) {
             let url = Config.HUB_API_URL + '/protocols';
             let storage = new Storage();
+            let xmlString = xmlContent.xml ? xmlContent.xml : (new XMLSerializer()).serializeToString(xmlContent)
             request.post(url)
                 .set(
                     'Authorization',
@@ -17,6 +18,7 @@ module.exports = function() {
                 .send({
                     id: protocol.id,
                     title: protocol.attributes.title,
+                    content: xmlString,
                 })
                 .then(function() {
                     App().RootView.showNotification({
