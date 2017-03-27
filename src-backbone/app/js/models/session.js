@@ -102,7 +102,9 @@ let SessionModel = Backbone.Model.extend({
             },
             success: function(response) {
                 self._authHandler(response, serverErrorHandler);
-                window.location = redirectUrl;
+                if (redirectUrl) {
+                    window.location = redirectUrl;
+                }
             },
             error: function(error) {
                 networkErrorHandler(error);
