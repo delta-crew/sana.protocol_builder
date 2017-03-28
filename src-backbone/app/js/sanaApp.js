@@ -187,6 +187,7 @@ module.exports = Marionette.Application.extend({
 
             const miscData = {
                 currentLanguage: i18n.language,
+                hubUrl: Config.HUB_URL,
             };
 
             // Merge in global Config
